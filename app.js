@@ -42,6 +42,18 @@ app.post('/upload', function(req, res){
 
 });
 
+
+router.get('/images/:imagename', (req, res) => {
+  
+      let imagename = req.params.imagename
+      let imagepath = __dirname + "/uploads/" + imagename
+      let image = fs.readFileSync(imagepath)
+      let mime = fileType(image).mime
+  
+      res.writeHead(200, { 'Content-Type': mime })
+      res.end(image, 'binary')
+  })
+
 var server = app.listen(3000, function(){
   console.log('Server listening on port 3000');
 });
