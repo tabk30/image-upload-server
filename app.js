@@ -24,6 +24,7 @@ app.post('/upload', function(req, res){
   // every time a file has been uploaded successfully,
   // rename it to it's orignal name
   form.on('file', function(field, file) {
+    console.log("file.path", file.path);
     fs.rename(file.path, path.join(form.uploadDir, file.name));
   });
 
@@ -43,10 +44,11 @@ app.post('/upload', function(req, res){
 });
 
 
-router.get('/images/:imagename', (req, res) => {
+app.get('/images/:imagename', (req, res) => {
   
       let imagename = req.params.imagename
       let imagepath = __dirname + "/uploads/" + imagename
+      console.log("image get", imagepath);
       let image = fs.readFileSync(imagepath)
       let mime = fileType(image).mime
   
@@ -54,6 +56,6 @@ router.get('/images/:imagename', (req, res) => {
       res.end(image, 'binary')
   })
 
-var server = app.listen(3000, function(){
+var server = app.listen(8000, function(){
   console.log('Server listening on port 3000');
 });
